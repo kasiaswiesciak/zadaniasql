@@ -1,0 +1,10 @@
+REPLACE(cus.Phone,'.','-') 
+W numerze telefonu kropki zostaną zamienione na myślniki
+
+
+DISTINCT służy do pobrania z tabeli unikatowych danych, które nie będą się powtarzać. 
+
+SUBSTRING(phone,2,3) - wybiera od drugiego miejsca trzy znaki
+
+CONCAT(cus.phone,',',' ','Fax : ',cus.fax) - łączy Nam kilka rzeczy w jedną
+
