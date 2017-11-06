@@ -1,10 +1,35 @@
-REPLACE(cus.Phone,'.','-') 
+* REPLACE(cus.Phone,'.','-') 
 W numerze telefonu kropki zostaną zamienione na myślniki
 
 
-DISTINCT służy do pobrania z tabeli unikatowych danych, które nie będą się powtarzać. 
+* DISTINCT służy do pobrania z tabeli unikatowych danych, które nie będą się powtarzać. 
 
-SUBSTRING(phone,2,3) - wybiera od drugiego miejsca trzy znaki
+* SUBSTRING(phone,2,3) - wybiera od drugiego miejsca trzy znaki
 
-CONCAT(cus.phone,',',' ','Fax : ',cus.fax) - łączy Nam kilka rzeczy w jedną
+* CONCAT(cus.phone,',',' ','Fax : ',cus.fax) - łączy Nam kilka rzeczy w jedną
+
+* CASE działa na takiej zasadzie, że dla każdego wiersza zwracanego 
+w wyniku zapytania sprawdza warunek logiczny i w zależności od wyniku wypisuje komunikat podany po słowie kluczowym THEN.
+
+CASE Wiek > 30 THEN 'Młodzik'
+
+Case idzie w parze z WHEN
+
+CASE 
+WHEN Count(OrderID) < 50 THEN 'Mniej niż 50'
+WHEN Count(OrderID) Between 50 AND 100 THEN 'Między 50 a 100'
+WHEN Count(OrderID) > 100 Then 'Więcej niż 100' END as 'Zamówienia'
+FROM dbo.Orders
+Group by EmployeeID
+Order by EmployeeID
+
+Jak w case mamy ELSE to musimy po else wpisać co ma sie tam znajdowac 
+
+SELECT EmployeeID, CONCAT(FirstName,' ',LastName) as 'Imię i nazwisko', 
+CASE
+WHEN TitleOfCourtesy = 'Ms.' Then 'Pani'
+WHEN TitleOfCourtesy = 'Mr.' Then 'Pan'
+ELSE TitleOfCourtesy END as 'Tytuł grzecznościowy'
+FROM dbo.Employees
+WHERE EmployeeID IN(1,2,3,6,8,9)
 
