@@ -33,3 +33,30 @@ ELSE TitleOfCourtesy END as 'Tytuł grzecznościowy'
 FROM dbo.Employees
 WHERE EmployeeID IN(1,2,3,6,8,9)
 
+TWORZENIE TABEL
+
+CREATE TABLE DaneCzłonków
+(
+	DataUrodzenia date,
+	Nazwisko nvarchar(12),
+	Imie nvarchar(12),
+	Ulica nvarchar(12),
+	KodPocztowy integer
+);
+
+INSERT INTO Dane_członków
+(	
+	DataUrodzenia,
+	Nazwisko, 
+	Imie,
+	Ulica,
+	KodPocztowy 
+)
+VALUES 
+( 
+	'1974-05-27',
+	'Swiesciak',
+	'Katarzyna',
+	'Popowicka',
+	'98400'
+);`
