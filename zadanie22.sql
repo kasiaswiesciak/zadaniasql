@@ -1,0 +1,20 @@
+--Utwórz tabelę, gdzie w jednej kolumnie będą liczby od 1 do 10, a w drugiej od 10 do 1. Nie używaj pętli.
+
+WITH CTE AS
+(
+SELECT 1 as x
+UNION SELECT 2
+UNION SELECT 3
+UNION SELECT 4
+UNION SELECT 5
+UNION SELECT 6
+UNION SELECT 7
+UNION SELECT 8
+UNION SELECT 9
+UNION SELECT 10
+)
+
+SELECT x, ROW_NUMBER() OVER(ORDER BY x DESC) as x2
+FROM CTE
+ORDER BY x;
+
