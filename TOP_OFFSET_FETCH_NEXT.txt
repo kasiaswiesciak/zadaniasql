@@ -1,0 +1,23 @@
+--Wyznacz 5 klientów, którzy mają najwyższą wartość zamówień.
+
+--Baza: Northwind, Tabele: dbo.Customers, dbo.Orders, dbo.Order Details, Kolumny: CustomerID, CompanyName, Quantity, UnitPrice, Wynik: 5 rows
+
+
+SELECT TOP 5 c.CompanyName, d.OrderID, SUM(d.Quantity*d.UnitPrice) as Suma
+FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID
+				 JOIN [Order Details] d ON o.OrderID = d.OrderID
+GROUP BY c.CompanyName, d.OrderID
+ORDER BY Suma DESC
+
+SELECT  c.CompanyName, d.OrderID, SUM(d.Quantity*d.UnitPrice) as Suma
+FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID
+				 JOIN [Order Details] d ON o.OrderID = d.OrderID
+GROUP BY c.CompanyName, d.OrderID
+ORDER BY Suma DESC
+OFFSET 0 ROWS
+FETCH NEXT 5 ROWS ONLY 
+
+--Powyższe zapytanie pomija 0 rekordów (ale moze pomijac np pierwsze 6 OFFSET 6 ROWS) 
+--i pobiera kolejne 5 rekordów (FETCH NEXT 5 ROWS ONLY)
+-- Działa trochę jak TOP ale tutaj mamy opcję manipulowania i wycinania 
+

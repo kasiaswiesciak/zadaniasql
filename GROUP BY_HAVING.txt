@@ -1,0 +1,11 @@
+--Które produkty najlepiej się sprzedają? Wyznacz te, na które złożono ponad 40 zamówień.
+
+--Baza: Northwind, Tabele: dbo.Order Details, dbo.Products, Kolumny: OrderID, ProductID, ProductName, Wynik: 13 rows
+
+SELECT p.ProductName, Count(d.OrderID) as 'Ilość'
+FROM [Order Details] d JOIN Products p ON d.ProductID = p.ProductID
+Group by p.ProductName
+HAVING Count(d.OrderID) > 40
+ORDER BY Count(d.Discount)
+
+Group by nie idzie w parze z WHERE tylko z HAVING
