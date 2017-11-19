@@ -1,0 +1,23 @@
+
+--Dla klientów o ID ALFKI, ISLAT, SAVEA stwórz zestawienie, pokazujące ich uporządkowane i ponumerowane według wartości zamówienia i sumę 
+--narastająca
+
+--Baza: Northwind, Tabele: dbo.Orders, dbo.Order Details, Kolumny: CustomerID, OrderID, UnitPrice, Quantity, Wynik: 151 rows
+
+--PATRITION BY - PO CZYM BEDE CISNAC (WYSZUKIWAC)
+
+SELECT o.CustomerID, o.OrderID, (d.Quantity * d.UnitPrice) as SUMA, ROW_NUMBER() OVER(PARTITION BY o.CustomerID 
+ORDER BY (d.Quantity * d.UnitPrice)) As Numer, SUM(d.Quantity * d.UnitPrice) OVER (PARTITION BY o.CustomerID 
+ORDER BY (d.Quantity * d.UnitPrice)) As 'Suma Narastająca'
+FROM Orders o JOIN [Order Details] d ON o.OrderID = d.OrderID
+WHERE o.CustomerID IN ('ALFKI','ISLAT','SAVEA')
+
+
+Żeby ponumerować te zamówienia muszę mieć ROW_NUMBER - zawsze w parze z OVER
+Over to takie group by ale tutaj bede miala podpodzialy, np nr 1-15 dla Kasia, 1-15 dla Pawła
+Po Over mam PARTITION BY po to aby SQL wiedzial po czym ma 'rollowac' rekordy
+Tutaj najpierw lecimy po CustomerID (pierwsza kolumna) a pozniej porzadkujemy tego klienta po wartosci zamowienia
+
+Jesli chodzi o sumę narastająca to SUM(d.Quantity * d.UnitPrice) musi wiedziec po czym ma sie sumowac,
+dlatego przepisujemy to co jest wyzej, w taki sposob sumuje nam po kolei po kliencie w porzadku zamowienia od naujmniejszego
+
