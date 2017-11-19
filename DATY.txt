@@ -1,0 +1,11 @@
+--Policz wartości zamówień, zrealizowane przez każdego pracownika w 1997 roku.
+
+--Baza: Northwind, Tabele: dbo.Employees, dbo.Orders, dbo.Order Details, Kolumny: EmployeeID, LastName, Title, UnitPrice, Quantity, 
+--Wynik: 9 rows
+
+SELECT  e.LastName,  SUM(d.Quantity * d.UnitPrice) as 'Wartość zamówienia'
+FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID
+				 JOIN [Order Details] d on o.OrderID = d.OrderID
+WHERE o.OrderDate >= '19970101' AND o.OrderDate < '19980101'
+GROUP BY e.LastName
+ORDER BY SUM(d.Quantity * d.UnitPrice)
