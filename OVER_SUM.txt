@@ -1,0 +1,21 @@
+--Policz, ile w firmie pracuje kobiet, a ilu mężczyzn. Wynik podaj również w procentach.
+
+--Baza: AdventureWorks, Tabela: HumanResources.Employee, Kolumny: Gender, Wynik: 2 rows
+
+
+
+WITH CTE AS(
+SELECT e.Gender, COUNT(*) as Ilość
+FROM HumanResources.Employee e 
+GROUP BY e.Gender
+)
+
+SELECT Gender, Ilość, CAST(100. * Ilość / SUM(Ilość) OVER() as DECIMAL(5,2)) as Procenty
+FROM CTE;
+
+--The CAST() function converts an expression from one data type to another data type.
+--OVER to funkcja rankingowa
+
+--SUM(Ilość) OVER() as DECIMAL(5,2)) as Pct
+--SUM(Ilość) OVER() - Suma jest funkcja agregujaca i musi wiedziec po czym grupowac
+-- ona dzieki temu overowi wie ze ma leciec po wszystkim, ma zsumowac kobiety i mezczyzn
